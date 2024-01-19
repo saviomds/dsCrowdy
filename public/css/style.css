@@ -228,4 +228,9 @@ footer {
     display: grid;
     grid-template-columns: 100%;
   }
+  .head-pro {
+    font-size: auto;
+    margin-left: -10px;
+    line-height: 1px;
+  }
 }
