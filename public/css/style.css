@@ -41,7 +41,7 @@ section {
   border-radius: 50%;
   width: 40%;
   padding: 10px;
-  border: 1px solid #1dfc00;
+  border: 1px solid #00a8fc;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .profile-name div.usernames,
@@ -126,6 +126,76 @@ footer {
   background-color: #333;
   color: white;
 }
+.project-section {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  color: #333;
+  padding: 10px;
+  grid-gap: 10px;
+}
+.project-section div.section-project-grid {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  padding: 20px;
+}
+.image-pro img {
+  width: 50%;
+  border-radius: 50%;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border: 2px solid #00a6ff;
+  padding: 2px;
+}
+.header-project {
+  display: grid;
+  grid-template-columns: 30% 50%;
+}
+.head-pro {
+  font-size: 15px;
+  margin-left: -30px;
+  line-height: 1px;
+}
+.header-project {
+  background-color: #004b5f24;
+  padding: 5px;
+  color: #333;
+  border-radius: 5px;
+}
+.project-button button.btnC {
+  color: #1dfc00;
+}
+.project-button button.btnS {
+  color: #fc00f4;
+}
+.project-button button.btnD {
+  color: #005c59;
+}
+.project-button button.btnF {
+  color: #fcc100;
+}
+.project-button button {
+  padding: 5px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  text-transform: capitalize;
+}
+.sendMessage button:hover {
+  color: #333;
+  transition: 1s all;
+}
+.sendMessage button {
+  font-size: 20px;
+  text-decoration: none;
+  color: #00a6ff;
+  border: none;
+  background-color: transparent;
+}
+.sendMessage {
+  border-radius: 10px;
+  background-color: #004b5f0b;
+  padding: 10px;
+  text-align: center;
+}
 
 @media only screen and (max-width: 500px) {
   .main-section {
@@ -138,6 +208,7 @@ footer {
     width: 30%;
   }
   .profile-name {
+    display: inline-block;
     margin-top: 0px;
     margin-left: 0px;
   }
@@ -152,5 +223,9 @@ footer {
   }
   .btns div button {
     width: 100%;
+  }
+  .project-section {
+    display: grid;
+    grid-template-columns: 100%;
   }
 }
