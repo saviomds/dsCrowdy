@@ -111,6 +111,15 @@ div.titleName {
 .socailMedia ul li a.Linkedin {
   color: #00a6ff;
 }
+.socailMedia ul li a.signup {
+  color: #0091ff;
+  background-color: #ffffff;
+  text-decoration: none;
+}
+.socailMedia ul li a.signup:hover {
+  background-color: #00325959;
+  transition: 1s ease;
+}
 .socailMedia ul {
   float: left;
   margin-left: -60px;
