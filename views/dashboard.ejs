@@ -1,0 +1,7 @@
+<% if (user) { %>
+<h3>Welcome to the dashboard, <%= user.username %>!</h3>
+<p>Your email: <%= user.email %></p>
+<% } else { %>
+<h3>Welcome to the dashboard, Guest!</h3>
+<p>Please log in to access more features.</p>
+<% } %>

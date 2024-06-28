@@ -5,8 +5,12 @@ const path = require("path");
 const router = require("./routes/register");
 const app = express();
 const mongoose = require("mongoose");
-
+const expressLayouts = require("express-ejs-layouts");
 const bodyParser = require("body-parser");
+
+// Set EJS as the view engine
+app.use(expressLayouts);
+app.set("view engine", "ejs");
 
 // Middleware body-parser
 app.use(bodyParser.json());

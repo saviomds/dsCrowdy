@@ -1,6 +1,8 @@
 const path = require("path");
 const bcrypt = require("bcryptjs");
+const router = require("../routes/register");
 const User = require("../model/User");
+
 // Get Form layout
 function getRegister(req, res) {
   res.sendFile(path.join(__dirname, "../public", "register.html"));
@@ -34,36 +36,87 @@ function registerValition(req, res) {
   const salt = bcrypt.genSaltSync(10);
   const hashedPwd = bcrypt.hashSync(password, salt);
 
-  // CHeck User Already Exist
-  let user = User.findOne({ email })
+  User.findOne({ email })
     .then((user) => {
-      return res.status(400).send("User already exists.");
+      if (user) {
+        return res.send("Email Already Exists");
+      } else {
+        //  Create a new user
+        user = new User({
+          username,
+          email,
+          password: hashedPwd,
+        });
+
+        user
+          .save()
+          .then((data) => res.send("Registration successful"))
+          .catch((error) => console.log(error));
+      }
     })
-    .catch((err) => console.log(err));
-
-  // Create a new user
-  user = new User({
-    username,
-    email,
-    password,
-  });
-
-  user
-    .save()
-    .then((date) => res.send("Registration successful"))
-    .catch(
-      () => res.status(500).send("Server error"),
-      console.error(err.message)
-    );
+    .catch((err) => {
+      // Handle any potential errors from findOne
+      console.error("Error checking for user:", err);
+      res.status(500).send("Internal Server Error");
+    });
 }
 
 // Form Validation @Login
 function loginValidation(req, res) {
-  res.send("hello");
+  const { password, email } = req.body;
+  if (!password || !email) {
+    return res.status(400).send("All fields are required.");
+  }
+  User.findOne({ email })
+    .then((user) => {
+      if (!user) {
+        return res
+          .status(404)
+          .send("User not found. Please check your credentials.");
+      }
+      bcrypt
+        .compare(password, user.password)
+        .then((isMatch) => {
+          if (isMatch) {
+            // Store user information in session
+            req.session.user = {
+              id: user._id,
+              email: user.email,
+              username: user.username,
+              // Add more user properties as needed
+            };
+            res.redirect("dash");
+
+            // Optionally, set up a session or issue a token here
+          } else {
+            res.status(401).send("Password incorrect.");
+          }
+        })
+        .catch((err) => {
+          console.error("Error comparing passwords:", err);
+          res.status(500).send("Internal Server Error");
+        });
+    })
+    .catch((err) => {
+      console.error("Error checking for user:", err);
+      res.status(500).send("Internal Server Error");
+    });
 }
+function getDash(req, res) {
+  // Check if user session exists
+  if (req.session.user) {
+    const user = req.session.user; // Retrieve user object from session
+    res.render("dashboard", { user }); // Pass user object to the dashboard view
+  } else {
+    // If user session does not exist, render dashboard for Guest or handle as needed
+    res.render("dashboard", { user: null }); // Pass null or handle as appropriate
+  }
+}
+
 module.exports = {
   getRegister,
   getLogin,
   registerValition,
   loginValidation,
+  getDash,
 };
